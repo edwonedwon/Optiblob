@@ -1136,6 +1136,8 @@ MonoBehaviour:
     m_RotationOrder: 0
   heightScale: 6
   animDuration: 2
+  rigidbody: {fileID: 0}
+  updateAnim: 1
 --- !u!1 &917566933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1842,7 +1844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07ea50df42abbe41b6ae843ed27ada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeRB: {fileID: 913283960}
+  autoCube: {fileID: 913283961}
   z: 16.5
 --- !u!1 &1845082138
 GameObject:

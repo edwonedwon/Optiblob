@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Touch : MonoBehaviour
 {
-    public Rigidbody cubeRB;
+    public AutoCube autoCube;
     public float z = 13;
 
 	void FixedUpdate ()
@@ -13,24 +13,21 @@ public class Touch : MonoBehaviour
         {
             var ray = Camera.main.ScreenPointToRay(touch.position);
 
-            //Debug.Log("touch");
             if (touch.phase == TouchPhase.Began)
             {
-                //Debug.Log("touch began");
-                //// Construct a ray from the current touch coordinates
-                //RaycastHit hit;
-                //if (Physics.Raycast(ray, out hit))
-                //{
-                //    Debug.Log("hit: " + hit.point);
-                //}
+                autoCube.updateAnim = false;
             }
             if (touch.phase == TouchPhase.Moved)
             {
                 if (z != 0)
                 {
                     Vector3 pos = ray.GetPoint(z);
-                    cubeRB.MovePosition(pos);
+                    autoCube.rigidbody.MovePosition(pos);
                 }
+            }
+            if (touch.phase == TouchPhase.Ended)
+            {
+                autoCube.updateAnim = true;
             }
         }
 	}

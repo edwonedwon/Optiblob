@@ -9,10 +9,14 @@ public class AutoCube : MonoBehaviour
     public float heightScale = 3f;
     public float animDuration = 2f;
 
-    new Rigidbody rigidbody;
+    [HideInInspector]
+    new public Rigidbody rigidbody;
     Vector3 startPos;
     float animStartTime;
     float animTimeNormalised;
+
+    [HideInInspector]
+    public bool updateAnim = true;
 
     private void Awake()
     {
@@ -22,6 +26,9 @@ public class AutoCube : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!updateAnim)
+            return;
+
         if (Time.time - animStartTime >= animDuration)
         {
             animStartTime = Time.time;
