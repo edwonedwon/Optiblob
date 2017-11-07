@@ -3071,11 +3071,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeae659eb5b06534fbeb4d95f8ca5cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  neighborConnections: 8
   neighborSpring: 10
   drag: 6
   rootSpring: 2
   rootSpringDamp: 0.56
-  debugDraw: 0
+  debugDraw: 1
 --- !u!4 &1845082218
 Transform:
   m_ObjectHideFlags: 0

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Optiblob : MonoBehaviour
 {
-    OptiblobPoint[] points = new OptiblobPoint[0];
+    List<OptiblobPoint> points = new List<OptiblobPoint>();
     
-    float[,] restingDistances;
-
+    public int neighborConnections = 24;
     public float neighborSpring = 1000f;
     public float drag = 10f;
     float dragLast;
@@ -16,21 +15,33 @@ public class Optiblob : MonoBehaviour
     public float rootSpringDamp = 1f;
     float rootSpringDampLast;
 
+    Dictionary<OptiblobPoint, List<OptiblobPoint>> neighbors;
+    TwoKeyDictionary<OptiblobPoint, OptiblobPoint, float> restingDistances;
+
     public bool debugDraw;
 
     private void Awake()
     {
-        points = transform.parent.GetComponentsInChildren<OptiblobPoint>();
-        restingDistances = new float[points.Length, points.Length];
+        neighbors = new Dictionary<OptiblobPoint, List<OptiblobPoint>>();
+
+        points = new List<OptiblobPoint>(transform.parent.GetComponentsInChildren<OptiblobPoint>());
+        restingDistances = new TwoKeyDictionary<OptiblobPoint, OptiblobPoint, float>();
         
-        for (int i = 0; i < points.Length; i++)
+        for (int i = 0; i < points.Count; i++)
         {
-            OptiblobPoint child = points[i];
-            child.Init(this, drag);
-            for (int j = i+1; j < points.Length; j++)
+            OptiblobPoint a = points[i];
+            a.Init(this, drag);
+            for (int j = i+1; j < points.Count; j++)
             {
-                restingDistances[i, j] = (points[i].transform.position - points[j].transform.position).sqrMagnitude;
+                OptiblobPoint b = points[j];
+                restingDistances.Add(a, b, (a.transform.position - b.transform.position).sqrMagnitude);
             }
+        }
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            OptiblobPoint point = points[i];
+            neighbors.Add(point, NearestNeighbors(point, Mathf.Min(neighborConnections, points.Count)));
         }
     }
 
@@ -39,21 +50,13 @@ public class Optiblob : MonoBehaviour
         UpdateDrag();
         UpdateRootSprings();
 
-        for (int i = 0; i < points.Length; i++) {
-            OptiblobPoint c1 = points[i];
+        for (int i = 0; i < points.Count; i++) {
+            OptiblobPoint a = points[i];
+            List<OptiblobPoint> pointNeighbors = neighbors[a];
 
-            for (int j = i+1; j < points.Length; j++)
-            {
-                OptiblobPoint c2 = points[j];
-                Vector3 delta = c1.transform.position - c2.transform.position;
-                float sqrDist = delta.sqrMagnitude;
-                Vector3 force = Vector3.zero;
-                if (sqrDist > Mathf.Epsilon)
-                {
-                    force = delta.normalized * ((restingDistances[i, j] - sqrDist) / sqrDist) * neighborSpring * Time.deltaTime;
-                }
-                c1.AddForce(force);
-                c2.AddForce(-force);
+            for (int j = 0; j < pointNeighbors.Count; j++) {
+                OptiblobPoint b = pointNeighbors[j];
+                Relax(a, b);
             }
         }
     }
@@ -62,7 +65,7 @@ public class Optiblob : MonoBehaviour
     {
         if (rootSpring != rootSpringLast)
         {
-            for (int i = 0; i < points.Length; i++)
+            for (int i = 0; i < points.Count; i++)
             {
                 points[i].rootSpring.spring = rootSpring;
             }
@@ -71,7 +74,7 @@ public class Optiblob : MonoBehaviour
 
         if (rootSpringDamp != rootSpringDampLast)
         {
-            for (int i =0; i < points.Length; i++)
+            for (int i =0; i < points.Count; i++)
             {
                 points[i].rootSpring.damper = rootSpringDamp;
             }
@@ -83,7 +86,7 @@ public class Optiblob : MonoBehaviour
     {
         if (drag != dragLast)
         {
-            for (int i = 0; i < points.Length; i++)
+            for (int i = 0; i < points.Count; i++)
             {
                 points[i].rigidbody.drag = drag;
             }
@@ -91,19 +94,46 @@ public class Optiblob : MonoBehaviour
         dragLast = drag;
     }
 
+    void Relax(OptiblobPoint a, OptiblobPoint b)
+    {
+        Vector3 delta = a.transform.position - b.transform.position;
+        float sqrDist = delta.sqrMagnitude;
+        Vector3 force = Vector3.zero;
+        if (sqrDist > Mathf.Epsilon)
+        {
+            force = delta.normalized * ((restingDistances.Get(a, b) - sqrDist) / sqrDist) * neighborSpring * Time.deltaTime;
+        }
+        a.AddForce(force);
+        b.AddForce(-force);
+    }
+
+    List<OptiblobPoint> NearestNeighbors(OptiblobPoint point, int count)
+    {
+        List<OptiblobPoint> neighbors = new List<OptiblobPoint>(points);
+        neighbors.Remove(point);
+        neighbors.Sort((OptiblobPoint a, OptiblobPoint b) =>
+        {
+            return Vector3.Distance(point.transform.position, a.transform.position)
+            .CompareTo(Vector3.Distance(point.transform.position, b.transform.position));
+        });
+        return neighbors.GetRange(0, count);
+    }
+
     private void OnDrawGizmos()
     {
         if (!debugDraw)
             return;
 
-        if (points.Length > 0)
+        if (points.Count > 0)
         {
             Gizmos.color = Color.blue;
-            for (int i = 0; i < points.Length; i++)
+            for (int i = 0; i < points.Count; i++)
             {
-                for (int j = i + 1; j < points.Length; j++)
-                {
-                    Gizmos.DrawLine(points[i].transform.position, points[j].transform.position);
+                OptiblobPoint point = points[i];
+                List<OptiblobPoint> pointNeighbors = neighbors[point];
+
+                for (int j = 0; j < pointNeighbors.Count; j++) {
+                    Gizmos.DrawLine(point.transform.position, pointNeighbors[j].transform.position);
                 }
             }
         }
