@@ -1,79 +1,78 @@
 fileFormatVersion: 2
-guid: 91aa977ca305a6b4c890da05e191a0a1
-timeCreated: 1509973364
-licenseType: Free
+guid: 944ae1d53321b7641849853854d06c47
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: BlobTestShape2Mesh
-    100004: BlobTestShape2Rig
-    100006: Joint_1
-    100008: Joint_10
-    100010: Joint_10_2
-    100012: Joint_11
-    100014: Joint_11_2
-    100016: Joint_12
-    100018: Joint_13
-    100020: Joint_14
-    100022: Joint_15
-    100024: Joint_16
-    100026: Joint_1_2
-    100028: Joint_2
-    100030: Joint_2_2
-    100032: Joint_3
-    100034: Joint_3_2
-    100036: Joint_4
-    100038: Joint_4_2
-    100040: Joint_5
-    100042: Joint_6
-    100044: Joint_6_2
-    100046: Joint_7
-    100048: Joint_7_2
-    100050: Joint_8
-    100052: Joint_8_2
-    100054: Joint_9
-    100056: Joint_9_2
-    100058: Joint
-    400000: //RootNode
-    400002: BlobTestShape2Mesh
-    400004: BlobTestShape2Rig
-    400006: Joint_1
-    400008: Joint_10
-    400010: Joint_10_2
-    400012: Joint_11
-    400014: Joint_11_2
-    400016: Joint_12
-    400018: Joint_13
-    400020: Joint_14
-    400022: Joint_15
-    400024: Joint_16
-    400026: Joint_1_2
-    400028: Joint_2
-    400030: Joint_2_2
-    400032: Joint_3
-    400034: Joint_3_2
-    400036: Joint_4
-    400038: Joint_4_2
-    400040: Joint_5
-    400042: Joint_6
-    400044: Joint_6_2
-    400046: Joint_7
-    400048: Joint_7_2
-    400050: Joint_8
-    400052: Joint_8_2
-    400054: Joint_9
-    400056: Joint_9_2
-    400058: Joint
-    4300000: BlobTestShape2Mesh
+    100000: BlobTestShape2Rig
+    100002: //RootNode
+    100004: BlobTestShape3Mesh
+    100006: CINEMA_4D_Editor
+    100008: Joint
+    100010: Joint_1
+    100012: Joint_10
+    100014: Joint_10_2
+    100016: Joint_11
+    100018: Joint_11_2
+    100020: Joint_12
+    100022: Joint_13
+    100024: Joint_14
+    100026: Joint_15
+    100028: Joint_16
+    100030: Joint_1_2
+    100032: Joint_2
+    100034: Joint_2_2
+    100036: Joint_3
+    100038: Joint_3_2
+    100040: Joint_4
+    100042: Joint_4_2
+    100044: Joint_5
+    100046: Joint_6
+    100048: Joint_6_2
+    100050: Joint_7
+    100052: Joint_7_2
+    100054: Joint_8
+    100056: Joint_8_2
+    100058: Joint_9
+    100060: Joint_9_2
+    100062: myOctaneSettings
+    400000: BlobTestShape2Rig
+    400002: //RootNode
+    400004: BlobTestShape3Mesh
+    400006: CINEMA_4D_Editor
+    400008: Joint
+    400010: Joint_1
+    400012: Joint_10
+    400014: Joint_10_2
+    400016: Joint_11
+    400018: Joint_11_2
+    400020: Joint_12
+    400022: Joint_13
+    400024: Joint_14
+    400026: Joint_15
+    400028: Joint_16
+    400030: Joint_1_2
+    400032: Joint_2
+    400034: Joint_2_2
+    400036: Joint_3
+    400038: Joint_3_2
+    400040: Joint_4
+    400042: Joint_4_2
+    400044: Joint_5
+    400046: Joint_6
+    400048: Joint_6_2
+    400050: Joint_7
+    400052: Joint_7_2
+    400054: Joint_8
+    400056: Joint_8_2
+    400058: Joint_9
+    400060: Joint_9_2
+    400062: myOctaneSettings
+    2000000: CINEMA_4D_Editor
+    4300000: BlobTestShape3Mesh
     9500000: //RootNode
-    13700000: BlobTestShape2Mesh
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: 0614f69e81739544eae83c96ed737d99, type: 2}
+    13700000: BlobTestShape3Mesh
+    2186277476908879412: ImportLogs
+  externalObjects: {}
   materials:
     importMaterials: 0
     materialName: 0
@@ -92,6 +91,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -116,6 +116,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88

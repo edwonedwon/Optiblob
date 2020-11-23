@@ -22,7 +22,7 @@ public class Touch : MonoBehaviour
                 if (z != 0)
                 {
                     Vector3 pos = ray.GetPoint(z);
-                    autoCube.rigidbody.MovePosition(pos);
+                    autoCube.rb.MovePosition(pos);
                 }
             }
             if (touch.phase == TouchPhase.Ended)

@@ -5,37 +5,29 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class AutoCube : MonoBehaviour
 {
-    public AnimationCurve upDownCurve;
     public float heightScale = 3f;
     public float animDuration = 2f;
 
     [HideInInspector]
-    new public Rigidbody rigidbody;
-    Vector3 startPos;
-    float animStartTime;
-    float animTimeNormalised;
+    public Rigidbody rb;
 
-    [HideInInspector]
-    public bool updateAnim = true;
+    Vector3 startPosition;
+
+    public bool updateAnim = false;
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        startPos = transform.position;
+        rb = GetComponent<Rigidbody>();
+        startPosition = rb.position;
     }
+
 
     private void FixedUpdate()
     {
-        if (!updateAnim)
-            return;
+        if (!updateAnim) { return; }
 
-        if (Time.time - animStartTime >= animDuration)
-        {
-            animStartTime = Time.time;
-        }
-        animTimeNormalised = (Time.time - animStartTime) / animDuration;
-        float yNew = startPos.y + (upDownCurve.Evaluate(animTimeNormalised) * heightScale);
-        Vector3 posNew = new Vector3(startPos.x, yNew, startPos.z);
-        rigidbody.MovePosition(posNew);
+        float newMagnitude = Mathf.Sin(Time.time * Mathf.PI / animDuration) * heightScale;
+
+        rb.position = startPosition + transform.up * newMagnitude;
     }
 }
