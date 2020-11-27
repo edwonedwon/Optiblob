@@ -2,56 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class OptiblobPoint : MonoBehaviour
+namespace Optiblob 
 {
-    Optiblob optiblob;
-    [HideInInspector]
-    public Rigidbody rb;
-    [HideInInspector]
-    public SpringJoint rootSpring;
-    public List<SpringJoint> neighborSprings;
-
-    public void Init(Optiblob blob, float drag)
+    [RequireComponent(typeof(Rigidbody))]
+    public class OptiblobPoint : MonoBehaviour
     {
-        optiblob = blob;
-        rb = GetComponent<Rigidbody>();
-        rb.drag = drag;
-        rootSpring = transform.GetOrAddComponent<SpringJoint>();
-        rootSpring.connectedBody = blob.rootRigidbody;
+        Optiblob optiblob;
+        [HideInInspector]
+        public Rigidbody rb;
+        [HideInInspector]
+        public SpringJoint rootSpring;
+        public List<SpringJoint> neighborSprings;
 
-        // freeze rigidbody rotation constraints
-        RigidbodyConstraints constraints = RigidbodyConstraints.FreezeRotation;
-        rb.constraints = constraints;
-    }
-
-    public void InitNeighborSprings()
-    {
-        for (int i = 0; i < Neighbors().Count; i++)
+        public void Init(Optiblob blob, float drag)
         {
-            SpringJoint newSpring = gameObject.AddComponent<SpringJoint>();
-            newSpring.connectedBody = Neighbors()[i].rb;
-            neighborSprings.Add(newSpring);
-        }
-        UpdateNeighborSpringSettings();
-    }
+            optiblob = blob;
+            rb = GetComponent<Rigidbody>();
+            rb.drag = drag;
+            rootSpring = transform.GetOrAddComponent<SpringJoint>();
+            rootSpring.connectedBody = blob.rootRigidbody;
 
-    public void UpdateNeighborSpringSettings()
-    {
-        foreach (SpringJoint spring in neighborSprings)
+            // freeze rigidbody rotation constraints
+            RigidbodyConstraints constraints = RigidbodyConstraints.FreezeRotation;
+            rb.constraints = constraints;
+        }
+
+        public void InitNeighborSprings()
         {
-            spring.spring = optiblob.neighborSpring;
-            spring.tolerance = optiblob.allSpringsTolerance;
+            for (int i = 0; i < Neighbors().Count; i++)
+            {
+                SpringJoint newSpring = gameObject.AddComponent<SpringJoint>();
+                newSpring.connectedBody = Neighbors()[i].rb;
+                neighborSprings.Add(newSpring);
+            }
+            UpdateNeighborSpringSettings();
         }
-    }
 
-    public void AddForce(Vector3 force)
-    {
-        rb.AddForce(force);
-    }
+        public void UpdateNeighborSpringSettings()
+        {
+            foreach (SpringJoint spring in neighborSprings)
+            {
+                spring.spring = optiblob.neighborSpring;
+                spring.tolerance = optiblob.allSpringsTolerance;
+            }
+        }
 
-    public List<OptiblobPoint> Neighbors()
-    {
-        return optiblob.NeighborsOfPoint(this);
+        public void AddForce(Vector3 force)
+        {
+            rb.AddForce(force);
+        }
+
+        public List<OptiblobPoint> Neighbors()
+        {
+            return optiblob.NeighborsOfPoint(this);
+        }
     }
 }

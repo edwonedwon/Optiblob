@@ -1,57 +1,60 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class TwoKeyDictionary<T1, T2, T3> where T2 : T1
+namespace Optiblob 
 {
-    // have to implement equatable and gethashcode to prevent memory-heavy boxing
-    // when used as Dictionary key
-    struct HashKeyPair : System.IEquatable<HashKeyPair>
+    public class TwoKeyDictionary<T1, T2, T3> where T2 : T1
     {
-        public int first, second;
-
-        public HashKeyPair(T1 a, T1 b)
+        // have to implement equatable and gethashcode to prevent memory-heavy boxing
+        // when used as Dictionary key
+        struct HashKeyPair : System.IEquatable<HashKeyPair>
         {
-            int aHash = a.GetHashCode();
-            int bHash = b.GetHashCode();
+            public int first, second;
 
-            if (aHash < bHash)
+            public HashKeyPair(T1 a, T1 b)
             {
-                first = aHash;
-                second = bHash;
+                int aHash = a.GetHashCode();
+                int bHash = b.GetHashCode();
+
+                if (aHash < bHash)
+                {
+                    first = aHash;
+                    second = bHash;
+                }
+                else
+                {
+                    first = bHash;
+                    second = aHash;
+                }
             }
-            else
+
+            public bool Equals(HashKeyPair other)
             {
-                first = bHash;
-                second = aHash;
+                return first == other.first && second == other.second;
+            }
+
+            public override int GetHashCode()
+            {
+                return first ^ second;
             }
         }
 
-        public bool Equals(HashKeyPair other)
+        Dictionary<HashKeyPair, T3> internalDictionary;
+
+        public TwoKeyDictionary()
         {
-            return first == other.first && second == other.second;
+            internalDictionary = new Dictionary<HashKeyPair, T3>();
         }
 
-        public override int GetHashCode()
+        public void Add(T1 aKey, T2 bKey, T3 value)
         {
-            return first ^ second;
+            HashKeyPair internalKey = new HashKeyPair(aKey, bKey);
+            internalDictionary.Add(internalKey, value);
         }
-    }
 
-    Dictionary<HashKeyPair, T3> internalDictionary;
-
-    public TwoKeyDictionary()
-    {
-        internalDictionary = new Dictionary<HashKeyPair, T3>();
-    }
-
-    public void Add(T1 aKey, T2 bKey, T3 value)
-    {
-        HashKeyPair internalKey = new HashKeyPair(aKey, bKey);
-        internalDictionary.Add(internalKey, value);
-    }
-
-    public T3 Get(T1 aKey, T2 bKey)
-    {
-        return internalDictionary[new HashKeyPair(aKey, bKey)];
+        public T3 Get(T1 aKey, T2 bKey)
+        {
+            return internalDictionary[new HashKeyPair(aKey, bKey)];
+        }
     }
 }
