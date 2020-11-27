@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Edwon;
 
 [RequireComponent(typeof(Rigidbody))]
 public class OptiblobPoint : MonoBehaviour
