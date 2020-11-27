@@ -1,0 +1,15 @@
+{
+  "name": "com.edwon.optiblob",
+  "version": "1.0.0",
+  "displayName": "Optiblob",
+  "description": "for creating blobby wobbly \nphysics based warping  meshes \nthat collide with anything \nand are optimized",
+  "unity": "2020.1",
+  "unityRelease": "15f1",
+  "keywords": [],
+  "author": {
+    "name": "EDWON",
+    "email": "edwon@edwon.tv",
+    "url": "https://www.edwon.tv"
+  },
+  "type": "tool"
+}
