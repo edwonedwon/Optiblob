@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "displayName": "Optiblob",
   "description": "for creating blobby wobbly \nphysics based warping  meshes \nthat collide with anything \nand are optimized",
-  "unity": "2020.1",
-  "unityRelease": "15f1",
+  "unity": "2019.2",
+  "unityRelease": "0f1",
   "keywords": [],
   "author": {
     "name": "Edwon",
@@ -17,7 +17,6 @@
       "displayName": "Sample",
       "description": "all the samples",
       "path": "Samples"
- 
     }
   ]
 }
