@@ -14,9 +14,9 @@
   "type": "tool",
   "samples": [
     {
-      "displayName": "Sample 1",
-      "description": "Description for sample 1",
-      "path": "Samples/Sample 1"
+      "displayName": "Sample",
+      "description": "all the samples",
+      "path": "Samples"
  
     }
   ]
