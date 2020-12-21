@@ -261,6 +261,10 @@ namespace Optiblob
                 // DRAW CENTER
                 Gizmos.color = Color.red;
                 Gizmos.DrawSphere(BlobCenter, debugDrawSphereSize + (debugDrawSphereSize/2));
+
+                // DRAW ROOT
+                Gizmos.color = Color.blue;
+                Gizmos.DrawSphere(rootRigidbody.position, debugDrawSphereSize);
             }
         }
     }
