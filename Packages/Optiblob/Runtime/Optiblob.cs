@@ -53,9 +53,25 @@ namespace Optiblob
         Dictionary<OptiblobPoint, List<OptiblobPoint>> neighborsByDistance;
         TwoKeyDictionary<OptiblobPoint, OptiblobPoint, float> restingDistances;
 
+        Vector3 blobCenter;
+        public Vector3 BlobCenter
+        {
+            get
+            {
+                blobCenter = Vector3.zero;
+                int childCount = blobPoints.Count;
+                for (int i = 0; i < childCount; i++)
+                {
+                    blobCenter += blobPoints[i].transform.position;
+                }
+                return blobCenter / childCount;
+            }
+        }
+
         [Header("DEBUG")]
         public bool debugLog;
         public bool debugDraw;
+        public float debugDrawSphereSize = 0.1f;
 
         public void Awake()
         {
@@ -220,13 +236,6 @@ namespace Optiblob
             {
                 Gizmos.color = Color.blue;
 
-                // NEW PLAN: DRAW A LINE FOR EACH SPRING
-
-                //foreach (OptiblobPoint point in blobPoints)
-                //{
-                //    foreach(
-                //}
-
                 // DRAW ALL NEIGHBOR SPRINGS
                 var enumerator = neighbors.GetEnumerator();
                 while (enumerator.MoveNext())
@@ -238,24 +247,20 @@ namespace Optiblob
                     }
                 }
 
-                Gizmos.color = Color.red;
+                Gizmos.color = Color.green;
 
-                // DRAW ROOT SPRINGS
                 foreach (OptiblobPoint point in blobPoints)
                 {
+                    // DRAW BLOB POINTS
+                    Gizmos.DrawSphere(point.transform.position, debugDrawSphereSize);
+
+                    // DRAW ROOT SPRINGS
                     Gizmos.DrawLine(point.transform.position, point.rootSpring.connectedBody.transform.position);
                 }
 
-                // JUST DRAW LINES BETWEEN EACH NEIGHBOR (DOESNT SHOW SPRINGS AT ALL)
-                //for (int i = 0; i < blobPoints.Count; i++)
-                //{
-                //    OptiblobPoint point = blobPoints[i];
-                //    List<OptiblobPoint> pointNeighbors = neighbors[point];
-
-                    //for (int j = 0; j < pointNeighbors.Count; j++) {
-                    //    Gizmos.DrawLine(point.transform.position, pointNeighbors[j].transform.position);
-                    //}
-                //}
+                // DRAW CENTER
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere(BlobCenter, debugDrawSphereSize + (debugDrawSphereSize/2));
             }
         }
     }
