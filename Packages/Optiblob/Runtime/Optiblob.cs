@@ -1,14 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Edwon.Tools;
 
 public class Optiblob : MonoBehaviour
 {
     protected List<OptiblobPoint> blobPoints = new List<OptiblobPoint>();
+    List<Transform> blobPointsTransforms = new List<Transform>();
+
+    public Vector3 BlobCenter 
+    {
+        get 
+        {
+            return Utils.GetCenterPoint(blobPointsTransforms);
+        }
+    }
 
     [Tooltip("the transform parent of all the optiblob points, can be different than the root rigidbody")]
     public Transform pointsParent;
-    public bool collideWithSelf = false;
 
     [Header("ROOT RIGIDBODY")]
     public Rigidbody rootRigidbody; // the center that all the points are attached to with springs
@@ -51,25 +60,9 @@ public class Optiblob : MonoBehaviour
     Dictionary<OptiblobPoint, List<OptiblobPoint>> neighborsByDistance;
     TwoKeyDictionary<OptiblobPoint, OptiblobPoint, float> restingDistances;
 
-    Vector3 blobCenter;
-    public Vector3 BlobCenter
-    {
-        get
-        {
-            blobCenter = Vector3.zero;
-            int childCount = blobPoints.Count;
-            for (int i = 0; i < childCount; i++)
-            {
-                blobCenter += blobPoints[i].transform.position;
-            }
-            return blobCenter / childCount;
-        }
-    }
-
     [Header("DEBUG")]
     public bool debugLog;
     public bool debugDraw;
-    public float debugDrawSphereSize = 0.1f;
 
     public void Awake()
     {
@@ -78,16 +71,12 @@ public class Optiblob : MonoBehaviour
 
     protected virtual void Init()
     {
-
         neighbors = new Dictionary<OptiblobPoint, List<OptiblobPoint>>();
         blobPoints = new List<OptiblobPoint>(pointsParent.GetComponentsInChildren<OptiblobPoint>());
+        foreach (OptiblobPoint point in blobPoints)
+            blobPointsTransforms.Add(point.transform);
         restingDistances = new TwoKeyDictionary<OptiblobPoint, OptiblobPoint, float>();
         InitNeighborsByDistance();
-
-        if (!collideWithSelf)
-        {
-            DontCollideWithSelf();
-        }
 
         for (int i = 0; i < blobPoints.Count; i++)
         {
@@ -117,27 +106,12 @@ public class Optiblob : MonoBehaviour
         {
             Debug.Log("Optiblob Points: " + blobPoints.Count);
         }
+
     }
 
     protected virtual void Update()
     {
         CheckAndUpdateOptiblobSettings();
-    }
-
-    void DontCollideWithSelf()
-    {
-        Collider[] colliders = transform.GetComponentsInChildren<Collider>();
-        int count = colliders.Length;
-        for (int i = 0; i < count; i++)
-        {
-            for (int j = 0; j < count; j++)
-            {
-                if (i < count && j < count)
-                {
-                    Physics.IgnoreCollision(colliders[i],colliders[j]);
-                }
-            }
-        }
     }
 
     void CheckAndUpdateOptiblobSettings()
@@ -234,6 +208,13 @@ public class Optiblob : MonoBehaviour
         {
             Gizmos.color = Color.blue;
 
+            // NEW PLAN: DRAW A LINE FOR EACH SPRING
+
+            //foreach (OptiblobPoint point in blobPoints)
+            //{
+            //    foreach(
+            //}
+
             // DRAW ALL NEIGHBOR SPRINGS
             var enumerator = neighbors.GetEnumerator();
             while (enumerator.MoveNext())
@@ -245,24 +226,24 @@ public class Optiblob : MonoBehaviour
                 }
             }
 
-            Gizmos.color = Color.green;
+            Gizmos.color = Color.red;
 
+            // DRAW ROOT SPRINGS
             foreach (OptiblobPoint point in blobPoints)
             {
-                // DRAW BLOB POINTS
-                Gizmos.DrawSphere(point.transform.position, debugDrawSphereSize);
-
-                // DRAW ROOT SPRINGS
                 Gizmos.DrawLine(point.transform.position, point.rootSpring.connectedBody.transform.position);
             }
 
-            // DRAW CENTER
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(BlobCenter, debugDrawSphereSize + (debugDrawSphereSize/2));
+            // JUST DRAW LINES BETWEEN EACH NEIGHBOR (DOESNT SHOW SPRINGS AT ALL)
+            //for (int i = 0; i < blobPoints.Count; i++)
+            //{
+            //    OptiblobPoint point = blobPoints[i];
+            //    List<OptiblobPoint> pointNeighbors = neighbors[point];
 
-            // DRAW ROOT
-            Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(rootRigidbody.position, debugDrawSphereSize);
+                //for (int j = 0; j < pointNeighbors.Count; j++) {
+                //    Gizmos.DrawLine(point.transform.position, pointNeighbors[j].transform.position);
+                //}
+            //}
         }
     }
 }

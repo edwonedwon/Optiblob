@@ -18,5 +18,8 @@
       "description": "all the samples",
       "path": "Samples"
     }
-  ]
+  ],
+  "dependencies": {
+    "com.edwon.tools": "1.1.7"
+  }
 }

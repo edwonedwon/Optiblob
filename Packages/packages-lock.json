@@ -4,7 +4,17 @@
       "version": "file:Optiblob",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.edwon.tools": "1.1.7"
+      }
+    },
+    "com.edwon.tools": {
+      "version": "file:/Users/Edwon/Dev/Tools/Unity-Tools/Packages/Unity Tools",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      }
     },
     "com.unity.ide.vscode": {
       "version": "1.2.3",

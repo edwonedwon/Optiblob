@@ -14,7 +14,6 @@ public class OptiblobCenterStay : MonoBehaviour
             transform.position = optiblob.BlobCenter;
     }
 
-
     void FixedUpdate()
     {
         if (updateOption == UpdateOption.FixedUpdate)

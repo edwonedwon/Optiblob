@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Optiblob;
 
 [RequireComponent(typeof(Rigidbody))]
 public class AutoCube : MonoBehaviour
