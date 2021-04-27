@@ -2,31 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Optiblob
+public class OptiblobCenterStay : MonoBehaviour
 {
-    public class OptiblobCenterStay : MonoBehaviour
+    public Optiblob optiblob;
+    public enum UpdateOption {Update, FixedUpdate, LateUpdate}
+    public UpdateOption updateOption;
+
+    void Update()
     {
-        public Optiblob optiblob;
-        public enum UpdateOption {Update, FixedUpdate, LateUpdate}
-        public UpdateOption updateOption;
-
-        void Update()
-        {
-            if (updateOption == UpdateOption.Update)
-                transform.position = optiblob.BlobCenter;
-        }
+        if (updateOption == UpdateOption.Update)
+            transform.position = optiblob.BlobCenter;
+    }
 
 
-        void FixedUpdate()
-        {
-            if (updateOption == UpdateOption.FixedUpdate)
-                transform.position = optiblob.BlobCenter;
-        }
+    void FixedUpdate()
+    {
+        if (updateOption == UpdateOption.FixedUpdate)
+            transform.position = optiblob.BlobCenter;
+    }
 
-        void LateUpdate()
-        {
-            if (updateOption == UpdateOption.LateUpdate)
-                transform.position = optiblob.BlobCenter;
-        }
+    void LateUpdate()
+    {
+        if (updateOption == UpdateOption.LateUpdate)
+            transform.position = optiblob.BlobCenter;
     }
 }
