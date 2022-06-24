@@ -6,7 +6,7 @@ using Edwon.Tools;
 public class Optiblob : MonoBehaviour
 {
     protected List<OptiblobPoint> blobPoints = new List<OptiblobPoint>();
-    List<Transform> blobPointsTransforms = new List<Transform>();
+    protected List<Transform> blobPointsTransforms = new List<Transform>();
 
     public Vector3 BlobCenter 
     {

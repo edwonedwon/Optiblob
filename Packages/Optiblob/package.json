@@ -1,6 +1,6 @@
 {
   "name": "com.edwon.optiblob",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "Optiblob",
   "description": "for creating blobby wobbly \nphysics based warping  meshes \nthat collide with anything \nand are optimized",
   "unity": "2019.2",
