@@ -111,7 +111,7 @@ public class Optiblob : MonoBehaviour
                 {
                     if (i != j)
                     {
-                        Physics.IgnoreCollision(blobPoints[i].rb.attachedCollider, blobPoints[j].rb.attachedCollider);
+                        Physics.IgnoreCollision(blobPoints[i].collider, blobPoints[j].collider);
                     }
                 }
             }

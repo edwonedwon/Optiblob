@@ -11,6 +11,7 @@ public class OptiblobPoint : MonoBehaviour
     [HideInInspector]
     public SpringJoint rootSpring;
     public List<SpringJoint> neighborSprings;
+    protected Collider collider;
 
     public void Init(Optiblob blob, float drag)
     {
@@ -23,6 +24,9 @@ public class OptiblobPoint : MonoBehaviour
         // freeze rigidbody rotation constraints
         RigidbodyConstraints constraints = RigidbodyConstraints.FreezeRotation;
         rb.constraints = constraints;
+        
+        // get collider
+        collider = GetComponentInChildren<Collider>();
     }
 
     public void InitNeighborSprings()
