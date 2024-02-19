@@ -19,6 +19,8 @@ public class Optiblob : MonoBehaviour
     [Tooltip("the transform parent of all the optiblob points, can be different than the root rigidbody")]
     public Transform pointsParent;
 
+    public bool dontCollideWithSelf = true;
+
     [Header("ROOT RIGIDBODY")]
     public Rigidbody rootRigidbody; // the center that all the points are attached to with springs
     public float rootMass = 1;
@@ -98,6 +100,21 @@ public class Optiblob : MonoBehaviour
         for (int i = 0; i < blobPoints.Count; i++)
         {
             blobPoints[i].InitNeighborSprings();
+        }
+        
+        // prevent colliders from colliding with each other
+        if (dontCollideWithSelf)
+        {
+            for (int i = 0; i < blobPoints.Count; i++)
+            {
+                for (int j = 0; j < blobPoints.Count; j++)
+                {
+                    if (i != j)
+                    {
+                        Physics.IgnoreCollision(blobPoints[i].rb.attachedCollider, blobPoints[j].rb.attachedCollider);
+                    }
+                }
+            }
         }
 
         UpdateOptiblobPointSettings();
