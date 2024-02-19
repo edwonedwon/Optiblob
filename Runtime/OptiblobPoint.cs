@@ -11,7 +11,7 @@ public class OptiblobPoint : MonoBehaviour
     [HideInInspector]
     public SpringJoint rootSpring;
     public List<SpringJoint> neighborSprings;
-    protected Collider collider;
+    public new Collider collider;
 
     public void Init(Optiblob blob, float drag)
     {
