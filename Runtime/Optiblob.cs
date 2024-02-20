@@ -20,6 +20,8 @@ public class Optiblob : MonoBehaviour
     public Transform pointsParent;
 
     public bool dontCollideWithSelf = true;
+    public bool rigidbodiesWakeOnStart = true;
+    public bool rigidbodiesDontSleep = true;
 
     [Header("ROOT RIGIDBODY")]
     public Rigidbody rootRigidbody; // the center that all the points are attached to with springs
@@ -115,6 +117,15 @@ public class Optiblob : MonoBehaviour
                     }
                 }
             }
+        }
+        
+        // wake up rigidbodies and prevent from sleeping
+        for (int i = 0; i < blobPoints.Count; i++)
+        {
+            if (rigidbodiesWakeOnStart)
+                blobPoints[i].rb.WakeUp();
+            if (rigidbodiesDontSleep)
+                blobPoints[i].rb.sleepThreshold = 0f;
         }
 
         UpdateOptiblobPointSettings();
