@@ -20,6 +20,8 @@ public class Optiblob : MonoBehaviour
     public Transform pointsParent;
 
     public bool dontCollideWithSelf = true;
+    [Tooltip("additional colliders that should not collide with the optiblob colliders")]
+    public List<Collider> extraDontCollideList; 
     public bool rigidbodiesWakeOnStart = true;
     public bool rigidbodiesDontSleep = true;
 
@@ -116,6 +118,15 @@ public class Optiblob : MonoBehaviour
                         Physics.IgnoreCollision(blobPoints[i].collider, blobPoints[j].collider);
                     }
                 }
+            }
+        }
+        
+        // prevent extra list from colliding with blob
+        foreach (Collider c in extraDontCollideList)
+        {
+            for (int i = 0; i < blobPoints.Count; i++)
+            {
+                Physics.IgnoreCollision(c, blobPoints[i].collider);
             }
         }
         
