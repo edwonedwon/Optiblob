@@ -54,6 +54,8 @@ public class Optiblob : MonoBehaviour
     public int neighborConnections = 24;
     public float neighborSpring = 1000f;
     float neighborSpringLast;
+    public float neighborSpringDamp;
+    float neighborSpringDampLast;
 
     [Header("ROOT SPRINGS")]
     public float rootSpring = 10f;
@@ -167,6 +169,7 @@ public class Optiblob : MonoBehaviour
             allRigidbodySleepThresholdLast != allRigidbodySleepThreshold ||
             allSpringsToleranceLast != allSpringsTolerance ||
             neighborSpringLast != neighborSpring ||
+            neighborSpringDampLast != neighborSpringDamp||
             constrainPointRotationLast != constrainPointRotation
             )
         {

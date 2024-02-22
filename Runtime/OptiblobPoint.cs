@@ -45,6 +45,7 @@ public class OptiblobPoint : MonoBehaviour
         foreach (SpringJoint spring in neighborSprings)
         {
             spring.spring = optiblob.neighborSpring;
+            spring.damper = optiblob.neighborSpringDamp;
             spring.tolerance = optiblob.allSpringsTolerance;
         }
     }
