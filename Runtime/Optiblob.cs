@@ -27,6 +27,7 @@ public class Optiblob : MonoBehaviour
 
     [Header("ROOT RIGIDBODY")]
     public Rigidbody rootRigidbody; // the center that all the points are attached to with springs
+    public bool setRootRigidbodySettings = true;
     public float rootMass = 1;
     float rootMassLast;
     public float rootDrag;
@@ -193,9 +194,12 @@ public class Optiblob : MonoBehaviour
 
     void UpdateOptiblobPointSettings()
     {
-        rootRigidbody.mass = rootMass;
-        rootRigidbody.drag = rootDrag;
-        rootRigidbody.angularDrag = rootAngularDrag;
+        if (setRootRigidbodySettings)
+        {
+            rootRigidbody.mass = rootMass;
+            rootRigidbody.drag = rootDrag;
+            rootRigidbody.angularDrag = rootAngularDrag;
+        }
         rootRigidbody.sleepThreshold = allRigidbodySleepThreshold;
 
         for (int i = 0; i < blobPoints.Count; i++)
